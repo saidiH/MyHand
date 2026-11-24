@@ -4,12 +4,16 @@
 // Assets are served from /public and cached by the service worker for offline use.
 import { FilesetResolver, HandLandmarker } from "@mediapipe/tasks-vision";
 
+function assetUrl(path: string): string {
+  return ((process.env.NEXT_PUBLIC_BASE_PATH as string | undefined) ?? "") + path;
+}
+
 let handLandmarkerPromise: Promise<HandLandmarker> | null = null;
 
 export async function getHandLandmarker(): Promise<HandLandmarker> {
   if (!handLandmarkerPromise) {
     handLandmarkerPromise = (async () => {
-      const fileset = await FilesetResolver.forVisionTasks("/mediapipe/wasm");
+      const fileset = await FilesetResolver.forVisionTasks(assetUrl("/mediapipe/wasm"));
       return HandLandmarker.createFromOptions(fileset, {
         baseOptions: { modelAssetPath: "/models/hand_landmarker.task", delegate: "GPU" },
         runningMode: "VIDEO",

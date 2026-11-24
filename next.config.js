@@ -26,7 +26,11 @@ const withPWA = require("next-pwa")({
   ],
 });
 
+const isGH = process.env.GITHUB_PAGES === "1";
 const nextConfig = {
+  // GitHub Pages serves from /MyHand/ — base path + asset prefix required
+  ...(isGH ? { output: "export", basePath: "/MyHand", assetPrefix: "/MyHand" } : {}),
+  ...(isGH ? { images: { unoptimized: true } } : {}),
   webpack: (config) => {
     config.resolve.symlinks = false;
     return config;

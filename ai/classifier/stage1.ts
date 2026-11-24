@@ -17,6 +17,14 @@ export interface PackConfig {
   accuracyReport?: { valAccuracy: number };
 }
 
+
+/** Prefix a same-origin asset path with the deployment basePath (GitHub Pages /MyHand). */
+function assetUrl(path: string): string {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const base = (process.env.NEXT_PUBLIC_BASE_PATH as string | undefined) ?? "";
+  return base + path;
+}
+
 export type LoadPhase = "json" | "weights" | "compile" | "ready";
 
 /** Per-feature normalisation params exported from training (replaces the Normalization layer). */
@@ -56,7 +64,7 @@ export async function getStage1Classifier() {
       const report = (pct: number, phase: LoadPhase) => onModelProgress?.(Math.min(100, Math.round(pct)), phase);
       report(2, "json");
       // 1. model topology (json) — weight it as 0..10%
-      const jsonBuf = await fetchWithProgress("/models/stage1/model.json", (l, t) => report(2 + (l / t) * 8, "json"));
+      const jsonBuf = await fetchWithProgress(assetUrl("/models/stage1/model.json"), (l, t) => report(2 + (l / t) * 8, "json"));
       const topology = JSON.parse(new TextDecoder().decode(jsonBuf));
       report(10, "json");
       // 2. weight shards — 10..85%
@@ -66,7 +74,7 @@ export async function getStage1Classifier() {
       let loadedAll = 0;
       const buffers: ArrayBuffer[] = [];
       for (const p of paths) {
-        const buf = await fetchWithProgress(`/models/stage1/${p}`, (l) => {
+        const buf = await fetchWithProgress(assetUrl(`/models/stage1/${p}`), (l) => {
           report(10 + Math.min(75, ((loadedAll + l) / Math.max(1, totalWeights)) * 75), "weights");
         });
         loadedAll += buf.byteLength;
@@ -93,12 +101,12 @@ export async function getStage1Classifier() {
       const model = await tf.loadLayersModel(tf.io.fromMemory(artifacts));
       report(90, "compile");
       // normalization is applied in JS (params exported to norm.json)
-      const normRes = await fetch("/models/stage1/norm.json");
+      const normRes = await fetch(assetUrl("/models/stage1/norm.json"));
       normParams = (await normRes.json()) as { mean: number[]; variance: number[] };
       report(94, "compile");
       // warm-up so the first real sign isn't slow
       tf.tidy(() => { model.predict(tf.zeros([1, FIXED_LEN, FEATURE_DIM])); });
-      const packRes = await fetch("/models/stage1/pack.json");
+      const packRes = await fetch(assetUrl("/models/stage1/pack.json"));
       const pack = (await packRes.json()) as PackConfig & { accuracyReport: { valAccuracy: number } };
       report(100, "ready");
       return { model, pack: { ...pack, accuracy: pack.accuracyReport?.valAccuracy ?? 0 } };

@@ -2,13 +2,14 @@
   "name": "MyHand — Bahasa Isyarat Malaysia",
   "short_name": "MyHand",
   "description": "Aplikasi dua hala Bahasa Isyarat Malaysia: isyarat ke teks, teks ke isyarat.",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0b0e1a",
   "theme_color": "#0b0e1a",
   "lang": "ms",
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
