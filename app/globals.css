@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-pink: #ff2d78;
+  --neon-orange: #ff7a1a;
+  --neon-cyan: #22e5ff;
+  --neon-purple: #a855f7;
+  --bg-base: #0b0e1a;
+  --bg-card: rgba(255, 255, 255, 0.06);
+  --bg-card-border: rgba(255, 255, 255, 0.12);
+}
+
+html, body {
+  background: var(--bg-base);
+  color: #f4f6ff;
+  overscroll-behavior: none;
+}
+
+.neon-gradient-text {
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-orange), var(--neon-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  backdrop-filter: blur(12px);
+  border-radius: 1.25rem;
+}
+
+.neon-glow {
+  box-shadow: 0 0 18px rgba(255, 45, 120, 0.55), 0 0 42px rgba(34, 229, 255, 0.25);
+}
+
+.btn-neon {
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-orange));
+  color: white;
+  border-radius: 9999px;
+  font-weight: 700;
+  min-height: 48px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-neon:active { transform: scale(0.96); }
+.btn-neon:disabled { opacity: 0.5; }
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f4f6ff;
+  border-radius: 9999px;
+  font-weight: 600;
+  min-height: 48px;
+  transition: transform 0.15s ease;
+}
+.btn-ghost:active { transform: scale(0.96); }
+
+input, textarea {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1rem;
+  color: #f4f6ff;
+  padding: 0.75rem 1rem;
+  outline: none;
+}
+input:focus, textarea:focus { border-color: var(--neon-cyan); }

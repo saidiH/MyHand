@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "id": "stage1",
+  "name": "MyHand Stage 1",
+  "version": "1.0.0",
+  "inputConfig": {
+    "fixedLen": 32,
+    "featureDim": 126,
+    "hands": 2,
+    "sources": [
+      "hand"
+    ]
+  },
+  "glossary": [
+    {
+      "id": "stage1:local:MAAF",
+      "gloss": "MAAF",
+      "msWord": "maaf",
+      "category": "stage1"
+    },
+    {
+      "id": "stage1:local:MAKAN",
+      "gloss": "MAKAN",
+      "msWord": "makan",
+      "category": "stage1"
+    },
+    {
+      "id": "stage1:local:SAYA",
+      "gloss": "SAYA",
+      "msWord": "saya",
+      "category": "stage1"
+    },
+    {
+      "id": "stage1:local:TERIMA KASIH",
+      "gloss": "TERIMA KASIH",
+      "msWord": "terima kasih",
+      "category": "stage1"
+    },
+    {
+      "id": "stage1:local:TOLONG",
+      "gloss": "TOLONG",
+      "msWord": "tolong",
+      "category": "stage1"
+    }
+  ],
+  "labels": [
+    "local:MAAF",
+    "local:MAKAN",
+    "local:SAYA",
+    "local:TERIMA KASIH",
+    "local:TOLONG"
+  ],
+  "accuracyReport": {
+    "valAccuracy": 0.938,
+    "target": 0.85,
+    "pass": true,
+    "valSamples": 16,
+    "trainedAt": "2026-11-21T12:30:04.931745Z",
+    "retrained": "2026-11-22: oversampled TERIMA KASIH/MAKAN, stronger augmentation, LSTM 96"
+  },
+  "modelUrl": "/models/stage1/model.json"
+}
